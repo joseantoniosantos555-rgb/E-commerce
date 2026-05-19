@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout - Estilo Feminino</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        .payment-option { cursor: pointer; transition: all 0.3s; }
+        .payment-option:hover { background: #f8f9fa; }
+        .payment-option.active { background: #e3f2fd; border-color: #2196f3; }
+        .installment-option { cursor: pointer; }
+        .installment-option:hover { background: #f8f9fa; }
+        .text-white, .text-white-50 { color: #846651 !important; }
+        .opacity-75 { color: rgba(132, 102, 81, 0.75) !important; }
+        .card-body span, .fw-bold span, #subtotal, #frete, #desconto, #totalFinal {
+            color: #846651 !important;
+        }
+        .d-flex.justify-content-between span {
+            color: #846651 !important;
+        }
+        .d-flex.justify-content-between.fw-bold span {
+            color: #846651 !important;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-4" style="background: linear-gradient(135deg, #ffffff 0%, #ffece8 50%, #ffffff 100%); min-height: 100vh; font-family: 'Open Sans', sans-serif;">
+        <h2 style="color: #846651; font-family: 'Dancing Script', cursive; font-size: 2.5rem;"><i class="fas fa-credit-card me-2"></i>Finalizar Pedido</h2>
+        
+        <form id="checkoutForm" action="/checkout/finalizar" method="post">
+            <div class="row">
+                <div class="col-md-8">
+                    <!-- Endereço de Entrega -->
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            <h5 style="font-family: 'Dancing Script', cursive; font-size: 1.8rem;"><i class="fas fa-map-marker-alt me-2"></i>Endereço de Entrega</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <label class="form-label">CEP</label>
+                                    <input type="text" class="form-control" name="cep" id="cep" placeholder="00000-000" required>
+                                </div>
+                                <div class="col-md-8">
+                                    <label class="form-label">Endereço</label>
+                                    <input type="text" class="form-control" name="endereco" id="endereco" required>
+                                </div>
+                            </div>
+                            <div class="row mt-3">
+                                <div class="col-md-6">
+                                    <label class="form-label">Cidade</label>
+                                    <input type="text" class="form-control" name="cidade" id="cidade" required>
+                                </div>
+                                <div class="col-md-2">
+                                    <label class="form-label">UF</label>
+                                    <input type="text" class="form-control" name="uf" id="uf" maxlength="2" required>
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="form-label">Complemento</label>
+                                    <input type="text" class="form-control" name="complemento">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Forma de Pagamento -->
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            <h5 style="font-family: 'Dancing Script', cursive; font-size: 1.8rem;"><i class="fas fa-credit-card me-2"></i>Forma de Pagamento</h5>
+                        </div>
+                        <div class="card-body">
+                            <!-- PIX -->
+                            <div class="payment-option border rounded p-3 mb-3" data-payment="pix">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="tipoPagamento" value="PIX" id="pix">
+                                    <label class="form-check-label" for="pix">
+                                        <i class="fas fa-qrcode text-success me-2"></i>PIX - 5% de desconto
+                                    </label>
+                                </div>
+                            </div>
+
+                            <!-- Cartão -->
+                            <div class="payment-option border rounded p-3 mb-3" data-payment="cartao">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="tipoPagamento" value="CARTAO" id="cartao">
+                                    <label class="form-check-label" for="cartao">
+                                        <i class="fas fa-credit-card text-primary me-2"></i>Cartão de Crédito
+                                    </label>
+                                </div>
+                                <div id="cartaoDetails" class="mt-3" style="display: none;">
+                                    <div class="row">
+                                        <div class="col-md-8">
+                                            <label class="form-label">Número do Cartão</label>
+                                            <input type="text" class="form-control" name="numeroCartao" placeholder="0000 0000 0000 0000">
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label class="form-label">CVV</label>
+                                            <input type="text" class="form-control" name="cvv" placeholder="000" maxlength="3">
+                                        </div>
+                                    </div>
+                                    <div class="row mt-3">
+                                        <div class="col-md-6">
+                                            <label class="form-label">Nome no Cartão</label>
+                                            <input type="text" class="form-control" name="nomeCartao">
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label class="form-label">Parcelas</label>
+                                            <select class="form-select" name="parcelas" id="parcelas">
+                                                <option value="1">1x sem juros</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Boleto -->
+                            <div class="payment-option border rounded p-3" data-payment="boleto">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="tipoPagamento" value="BOLETO" id="boleto">
+                                    <label class="form-check-label" for="boleto">
+                                        <i class="fas fa-barcode text-warning me-2"></i>Boleto Bancário - Vencimento em 3 dias
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Resumo do Pedido -->
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 style="font-family: 'Dancing Script', cursive; font-size: 1.8rem;"><i class="fas fa-receipt me-2"></i>Resumo do Pedido</h5>
+                        </div>
+                        <div class="card-body">
+                            <div th:each="item : ${itens}" class="d-flex justify-content-between mb-2">
+                                <span th:text="${item.produto.nome}">Produto</span>
+                                <span th:text="'R$ ' + ${#numbers.formatDecimal(item.subtotal, 1, 2)}">R$ 0,00</span>
+                            </div>
+                            <hr>
+                            <div class="d-flex justify-content-between">
+                                <span>Subtotal:</span>
+                                <span id="subtotal" th:text="'R$ ' + ${#numbers.formatDecimal(total, 1, 2)}">R$ 0,00</span>
+                            </div>
+                            <div class="d-flex justify-content-between">
+                                <span>Frete:</span>
+                                <span id="frete">Calcular</span>
+                            </div>
+                            <div class="d-flex justify-content-between text-success" id="descontoDiv" style="display: none;">
+                                <span>Desconto PIX:</span>
+                                <span id="desconto">R$ 0,00</span>
+                            </div>
+                            <hr>
+                            <div class="d-flex justify-content-between fw-bold">
+                                <span>Total:</span>
+                                <span id="totalFinal" th:text="'R$ ' + ${#numbers.formatDecimal(total, 1, 2)}">R$ 0,00</span>
+                            </div>
+                            
+                            <button type="submit" class="btn btn-success w-100 mt-3">
+                                <i class="fas fa-check me-2"></i>Finalizar Pedido
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        const subtotalValue = parseFloat('[[${total}]]');
+        let freteValue = 0;
+        let descontoValue = 0;
+
+        // Payment method selection
+        document.querySelectorAll('.payment-option').forEach(option => {
+            option.addEventListener('click', function() {
+                document.querySelectorAll('.payment-option').forEach(o => o.classList.remove('active'));
+                this.classList.add('active');
+                this.querySelector('input[type="radio"]').checked = true;
+                
+                const paymentType = this.dataset.payment;
+                
+                // Show/hide card details
+                document.getElementById('cartaoDetails').style.display = 
+                    paymentType === 'cartao' ? 'block' : 'none';
+                
+                // Calculate discount for PIX
+                if (paymentType === 'pix') {
+                    descontoValue = subtotalValue * 0.05;
+                    document.getElementById('descontoDiv').style.display = 'flex';
+                    document.getElementById('desconto').textContent = 'R$ ' + descontoValue.toFixed(2);
+                } else {
+                    descontoValue = 0;
+                    document.getElementById('descontoDiv').style.display = 'none';
+                }
+                
+                updateTotal();
+                updateInstallments();
+            });
+        });
+
+        // CEP lookup
+        document.getElementById('cep').addEventListener('blur', function() {
+            const cep = this.value.replace(/\D/g, '');
+            if (cep.length === 8) {
+                fetch(`https://viacep.com.br/ws/${cep}/json/`)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (!data.erro) {
+                            document.getElementById('endereco').value = data.logradouro;
+                            document.getElementById('cidade').value = data.localidade;
+                            document.getElementById('uf').value = data.uf;
+                            calculateShipping(data.uf);
+                        }
+                    });
+            }
+        });
+
+        function calculateShipping(uf) {
+            // Simulate shipping calculation
+            const shippingRates = {
+                'SP': 15.00, 'RJ': 18.00, 'MG': 20.00, 'RS': 25.00,
+                'PR': 22.00, 'SC': 24.00, 'GO': 28.00, 'DF': 25.00
+            };
+            
+            freteValue = shippingRates[uf] || 30.00;
+            document.getElementById('frete').textContent = 'R$ ' + freteValue.toFixed(2);
+            updateTotal();
+        }
+
+        function updateTotal() {
+            const total = subtotalValue + freteValue - descontoValue;
+            document.getElementById('totalFinal').textContent = 'R$ ' + total.toFixed(2);
+        }
+
+        function updateInstallments() {
+            const parcelas = document.getElementById('parcelas');
+            const total = subtotalValue + freteValue - descontoValue;
+            
+            parcelas.innerHTML = '';
+            for (let i = 1; i <= 12; i++) {
+                const valorParcela = total / i;
+                const juros = i > 1 ? ' (com juros)' : ' (sem juros)';
+                const option = new Option(`${i}x de R$ ${valorParcela.toFixed(2)}${juros}`, i);
+                parcelas.add(option);
+            }
+        }
+
+        // CEP mask
+        document.getElementById('cep').addEventListener('input', function() {
+            this.value = this.value.replace(/\D/g, '').replace(/(\d{5})(\d)/, '$1-$2');
+        });
+    </script>
+</body>
+</html>

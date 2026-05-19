@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Pedidos</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        .text-white, .text-white-50 { color: #846651 !important; }
+        .opacity-75 { color: rgba(132, 102, 81, 0.75) !important; }
+        
+        .status-select {
+            min-width: 140px;
+            transition: all 0.3s ease;
+        }
+        
+        .status-select:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        .table th {
+            background-color: #f8f9fa;
+            border-top: none;
+            font-weight: 600;
+        }
+        
+        .btn-group .btn {
+            margin: 0 1px;
+        }
+        
+        .alert {
+            border: none;
+            border-radius: 8px;
+        }
+        
+        .card {
+            border: none;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body style="background: linear-gradient(135deg, #ffffff 0%, #ffece8 50%, #ffffff 100%); min-height: 100vh; font-family: 'Open Sans', sans-serif;">
+    <div class="container-fluid mt-4">
+        <div class="row">
+            <div class="col-12">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h2 style="color: #846651; font-family: 'Dancing Script', cursive; font-size: 2.5rem;"><i class="fas fa-cogs me-2"></i>Administração - Pedidos</h2>
+                    <a href="/" class="btn btn-secondary">
+                        <i class="fas fa-home me-2"></i>Voltar ao Site
+                    </a>
+                </div>
+
+                <div class="alert alert-success alert-dismissible fade show" th:if="${sucesso}" role="alert">
+                    <i class="fas fa-check-circle me-2"></i><span th:text="${sucesso}"></span>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+                <div class="alert alert-danger alert-dismissible fade show" th:if="${erro}" role="alert">
+                    <i class="fas fa-exclamation-circle me-2"></i><span th:text="${erro}"></span>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h5 style="font-family: 'Dancing Script', cursive; font-size: 1.8rem;"><i class="fas fa-list me-2"></i>Todos os Pedidos</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Cliente</th>
+                                        <th>Data</th>
+                                        <th>Total</th>
+                                        <th>Status Pedido</th>
+                                        <th>Status Pagamento</th>
+                                        <th>Ações</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr th:each="pedido : ${pedidos}">
+                                        <td th:text="${pedido.idPedido}">1</td>
+                                        <td th:text="${pedido.usuario.nome}">Cliente</td>
+                                        <td th:text="${#temporals.format(pedido.dataPedido, 'dd/MM/yyyy HH:mm')}">01/01/2024</td>
+                                        <td>R$ <span th:text="${#numbers.formatDecimal(pedido.valorTotal, 1, 2)}">0,00</span></td>
+                                        <td>
+                                            <form method="post" th:action="@{/admin/pedidos/{id}/status(id=${pedido.idPedido})}" style="display:inline;">
+                                                <select name="status" class="form-select form-select-sm" onchange="this.form.submit()">
+                                                    <option value="AGUARDANDO" th:selected="${pedido.statusPedido.name() == 'AGUARDANDO'}">Aguardando</option>
+                                                    <option value="FATURADO" th:selected="${pedido.statusPedido.name() == 'FATURADO'}">Faturado</option>
+                                                    <option value="EM_SEPARACAO" th:selected="${pedido.statusPedido.name() == 'EM_SEPARACAO'}">Em Separação</option>
+                                                    <option value="ENVIADO" th:selected="${pedido.statusPedido.name() == 'ENVIADO'}">Enviado</option>
+                                                    <option value="CONCLUIDO" th:selected="${pedido.statusPedido.name() == 'CONCLUIDO'}">Concluído</option>
+                                                    <option value="CANCELADO" th:selected="${pedido.statusPedido.name() == 'CANCELADO'}">Cancelado</option>
+                                                </select>
+                                            </form>
+                                        </td>
+                                        <td>
+                                            <span class="badge bg-warning" th:if="${pedido.pagamento != null}" th:text="${pedido.pagamento.statusPagamento}">PENDENTE</span>
+                                            <span class="badge bg-secondary" th:if="${pedido.pagamento == null}">Sem Pagamento</span>
+                                        </td>
+                                        <td>
+                                            <div class="btn-group btn-group-sm">
+                                                <a th:href="@{/pedidos/{id}/acompanhar(id=${pedido.idPedido})}" class="btn btn-outline-primary">
+                                                    <i class="fas fa-eye"></i>
+                                                </a>
+                                                <a th:href="@{/nota-fiscal/gerar/{id}(id=${pedido.idPedido})}" class="btn btn-outline-success" target="_blank">
+                                                    <i class="fas fa-file-pdf"></i>
+                                                </a>
+                                                <button class="btn btn-outline-info" onclick="showDetails([[${pedido.idPedido}]])">
+                                                    <i class="fas fa-info"></i>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Detalhes -->
+    <div class="modal fade" id="detailsModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Detalhes do Pedido</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body" id="modalContent">
+                    <!-- Conteúdo carregado via AJAX -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function showDetails(pedidoId) {
+            document.getElementById('modalContent').innerHTML = `
+                <p>Carregando detalhes do pedido ${pedidoId}...</p>
+                <p>Aqui você pode implementar a busca de itens do pedido, endereço de entrega, etc.</p>
+            `;
+            new bootstrap.Modal(document.getElementById('detailsModal')).show();
+        }
+
+        // Auto refresh every 60 seconds
+        setInterval(() => {
+            location.reload();
+        }, 60000);
+    </script>
+</body>
+</html>

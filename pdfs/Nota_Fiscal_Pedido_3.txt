@@ -1,0 +1,15 @@
+=== NOTA FISCAL ===
+
+Pedido #3
+Data: 04/12/2025 21:31
+Cliente: adminteste
+Endereço: Garanhus
+
+ITENS:
+--------------------------------------------------
+Camisa                         Qtd:  1  R$    29.90
+--------------------------------------------------
+TOTAL: R$ 29.90
+
+Status: ENTREGUE
+Data de Geração: 09/12/2025 14:57

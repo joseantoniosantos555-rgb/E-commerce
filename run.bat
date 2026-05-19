@@ -1,12 +1,7 @@
 @echo off
-echo Executando E-Commerce Java...
+echo Iniciando E-Commerce...
 
-if not exist "bin\com\ecommerce\ECommerceApp.class" (
-    echo Projeto nao compilado! Execute compile.bat primeiro.
-    pause
-    exit
-)
-
-java -cp bin com.ecommerce.ECommerceApp
+REM Executar com a estrutura correta
+java -cp "bin;lib\postgresql-42.7.3.jar" com.ecommerce.ECommerceApp
 
 pause

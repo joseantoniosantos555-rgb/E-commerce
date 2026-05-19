@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Teste Admin</title>
+</head>
+<body>
+    <h1>Teste de Acesso Admin</h1>
+    <p>Usuário logado: <span th:text="${session.usuario?.nome}">Nenhum</span></p>
+    <p>Tipo de usuário: <span th:text="${session.usuario?.tipoUsuario}">Nenhum</span></p>
+    <p>Login: <span th:text="${session.usuario?.login}">Nenhum</span></p>
+    
+    <div th:if="${session.usuario?.tipoUsuario?.name() == 'ADMIN'}">
+        <h2>✅ Você é ADMIN!</h2>
+        <a href="/admin/dashboard">Ir para Dashboard</a><br>
+        <a href="/admin/produtos">Ir para Produtos</a><br>
+        <a href="/admin/produtos/novo">Cadastrar Produto</a>
+    </div>
+    
+    <div th:unless="${session.usuario?.tipoUsuario?.name() == 'ADMIN'}">
+        <h2>❌ Você NÃO é admin</h2>
+        <a href="/login">Fazer Login</a>
+    </div>
+</body>
+</html>

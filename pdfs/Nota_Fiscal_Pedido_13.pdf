@@ -1,0 +1,111 @@
+%PDF-1.4
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+2 0 obj
+<< /Type /Pages /Kids [3 0 R] /Count 1 >>
+endobj
+3 0 obj
+<< /Type /Page /Parent 2 0 R /Resources 4 0 R /MediaBox [0 0 595 842] /Contents 5 0 R >>
+endobj
+4 0 obj
+<< /Font << /F1 << /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold >> /F2 << /Type /Font /Subtype /Type1 /BaseFont /Helvetica >> >> >>
+endobj
+5 0 obj
+<< /Length 2835 >>
+stream
+0.5 w
+50 50 495 742 re S
+50 770 495 22 re S
+450 770 m 450 792 l S
+BT /F1 14 Tf 200 775 Td (NOTA FISCAL) Tj ET
+BT /F2 8 Tf 480 782 Td (NF-e) Tj ET
+BT /F2 7 Tf 455 774 Td (No 00000013) Tj ET
+BT /F2 7 Tf 455 766 Td (SERIE 001) Tj ET
+50 770 m 545 770 l S
+50 750 m 545 750 l S
+BT /F1 9 Tf 55 735 Td (EMITENTE) Tj ET
+BT /F2 8 Tf 55 722 Td (E-COMMERCE LTDA) Tj ET
+BT /F2 7 Tf 55 712 Td (RUA DO COMERCIO, 123 - CENTRO) Tj ET
+BT /F2 7 Tf 55 702 Td (CNPJ: 12.345.678/0001-90) Tj ET
+BT /F2 6 Tf 320 735 Td (CHAVE DE ACESSO) Tj ET
+BT /F2 7 Tf 320 725 Td (00000000000000000000000000000000001604938257) Tj ET
+50 695 m 545 695 l S
+BT /F1 9 Tf 55 680 Td (DESTINATARIO / REMETENTE) Tj ET
+BT /F2 8 Tf 55 667 Td (NOME/RAZAO SOCIAL: Cliente 3) Tj ET
+BT /F2 7 Tf 55 657 Td (ENDERECO: Rua do Outro Canto, 1) Tj ET
+50 645 m 545 645 l S
+BT /F2 7 Tf 55 635 Td (DATA DE EMISSAO) Tj ET
+BT /F1 8 Tf 55 625 Td (09/12/2025 23:07) Tj ET
+200 635 m 200 615 l S
+BT /F2 7 Tf 205 635 Td (PROTOCOLO DE AUTORIZACAO) Tj ET
+BT /F1 8 Tf 205 625 Td (000000012999987) Tj ET
+50 615 m 545 615 l S
+BT /F1 8 Tf 55 600 Td (DADOS DOS PRODUTOS / SERVICOS) Tj ET
+50 590 m 545 590 l S
+0.8 0.8 0.8 rg
+50 575 495 15 re f
+0 0 0 rg
+50 575 m 545 575 l S
+50 590 m 50 575 l S
+80 590 m 80 575 l S
+300 590 m 300 575 l S
+340 590 m 340 575 l S
+390 590 m 390 575 l S
+450 590 m 450 575 l S
+545 590 m 545 575 l S
+BT /F1 7 Tf 52 578 Td (COD) Tj ET
+BT /F1 7 Tf 85 578 Td (DESCRICAO DO PRODUTO) Tj ET
+BT /F1 7 Tf 305 578 Td (QTD) Tj ET
+BT /F1 7 Tf 345 578 Td (UN) Tj ET
+BT /F1 7 Tf 395 578 Td (VL UNIT) Tj ET
+BT /F1 7 Tf 455 578 Td (VL TOTAL) Tj ET
+50 565 m 545 565 l S
+50 580 m 50 565 l S
+80 580 m 80 565 l S
+300 580 m 300 565 l S
+340 580 m 340 565 l S
+390 580 m 390 565 l S
+450 580 m 450 565 l S
+545 580 m 545 565 l S
+BT /F2 7 Tf 55 568 Td (001) Tj ET
+BT /F2 7 Tf 85 568 Td (Moletom) Tj ET
+BT /F2 7 Tf 310 568 Td (1) Tj ET
+BT /F2 7 Tf 345 568 Td (UN) Tj ET
+BT /F2 7 Tf 395 568 Td (119.90) Tj ET
+BT /F2 7 Tf 455 568 Td (119.90) Tj ET
+50 550 m 545 550 l S
+50 530 m 545 530 l S
+0.9 0.9 0.9 rg
+50 510 495 20 re f
+0 0 0 rg
+BT /F1 10 Tf 55 515 Td (VALOR TOTAL DOS PRODUTOS) Tj ET
+BT /F1 11 Tf 450 515 Td (R$ 119.90) Tj ET
+50 510 m 545 510 l S
+50 490 m 545 490 l S
+BT /F1 8 Tf 55 478 Td (INFORMACOES COMPLEMENTARES) Tj ET
+BT /F2 7 Tf 55 466 Td (Pedido: #13 | Status: ENTREGUE) Tj ET
+BT /F2 7 Tf 55 454 Td (Data de Geracao: 09/12/2025 23:07) Tj ET
+BT /F2 7 Tf 55 442 Td (Forma de Pagamento: PIX) Tj ET
+BT /F2 7 Tf 55 430 Td (Observacoes: Produto entregue conforme solicitado.) Tj ET
+BT /F2 7 Tf 55 418 Td (Garantia: 90 dias conforme Codigo de Defesa do Consumidor) Tj ET
+BT /F2 7 Tf 55 406 Td (SAC: 0800-123-4567 | Email: sac@ecommerce.com.br) Tj ET
+50 390 m 545 390 l S
+BT /F2 6 Tf 55 380 Td (Documento emitido por computador. Valido sem assinatura.) Tj ET
+BT /F2 6 Tf 380 380 Td (www.ecommerce.com.br) Tj ET
+
+endstream
+endobj
+xref
+0 6
+0000000000 65535 f 
+0000000009 00000 n 
+0000000058 00000 n 
+0000000115 00000 n 
+0000000219 00000 n 
+0000000375 00000 n 
+trailer
+<< /Size 6 /Root 1 0 R >>
+startxref
+3262
+%%EOF

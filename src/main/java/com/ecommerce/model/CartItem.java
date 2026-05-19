@@ -4,25 +4,31 @@ import java.math.BigDecimal;
 
 public class CartItem {
     private Product product;
-    private int quantity;
-
-    public CartItem(Product product, int quantity) {
+    private Integer quantity;
+    private BigDecimal subtotal;
+    
+    public CartItem() {}
+    
+    public CartItem(Product product, Integer quantity) {
         this.product = product;
         this.quantity = quantity;
+        this.subtotal = product.getPreco().multiply(BigDecimal.valueOf(quantity));
     }
-
+    
     public Product getProduct() { return product; }
     public void setProduct(Product product) { this.product = product; }
-
-    public int getQuantity() { return quantity; }
-    public void setQuantity(int quantity) { this.quantity = quantity; }
-
-    public BigDecimal getSubtotal() {
-        return product.getPreco().multiply(BigDecimal.valueOf(quantity));
+    
+    public Integer getQuantity() { return quantity; }
+    public void setQuantity(Integer quantity) { 
+        this.quantity = quantity;
+        if (this.product != null) {
+            this.subtotal = this.product.getPreco().multiply(BigDecimal.valueOf(quantity));
+        }
     }
-
-    @Override
-    public String toString() {
-        return product.getNome() + " (Qtd: " + quantity + ") - R$ " + getSubtotal();
-    }
+    
+    public BigDecimal getSubtotal() { return subtotal; }
+    public void setSubtotal(BigDecimal subtotal) { this.subtotal = subtotal; }
+    
+    public String getProductName() { return product != null ? product.getNome() : null; }
+    public Long getProductId() { return product != null ? product.getId() : null; }
 }

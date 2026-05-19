@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estilo Feminino - Moda Feminina Premium</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary: linear-gradient(135deg, #ffece8 0%, #ffffff 100%);
+            --secondary: linear-gradient(135deg, #846651 0%, #6b5442 100%);
+            --accent: linear-gradient(135deg, #ffece8 0%, #ffffff 100%);
+            --white: #ffffff;
+            --cream: #ffece8;
+            --brown: #846651;
+            --light: #ffffff;
+            --glass: rgba(255, 236, 232, 0.1);
+            --glass-border: rgba(255, 236, 232, 0.2);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Open Sans', sans-serif;
+            background: linear-gradient(135deg, #ffffff 0%, #ffece8 50%, #ffffff 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        
+        /* Glassmorphism Navbar */
+        .navbar-glass {
+            background: rgba(255, 236, 232, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(132, 102, 81, 0.2);
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+        
+        .navbar-brand {
+            font-family: 'Dancing Script', cursive;
+            font-weight: 600;
+            font-size: 2.2rem;
+            color: #846651 !important;
+            text-shadow: 0 2px 10px rgba(132, 102, 81, 0.3);
+        }
+        
+        @media (max-width: 768px) {
+            .navbar-brand {
+                font-size: 1.8rem;
+            }
+            .navbar-brand img {
+                height: 35px !important;
+            }
+        }
+        
+        .nav-link {
+            color: #846651 !important;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .nav-link:hover {
+            color: #846651 !important;
+            opacity: 0.7;
+            transform: translateY(-2px);
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background: var(--secondary);
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        /* Glass Buttons */
+        .btn-glass {
+            background: rgba(255, 236, 232, 0.8);
+            border: 1px solid rgba(132, 102, 81, 0.3);
+            color: #846651;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+        
+        .btn-glass:hover {
+            background: rgba(255, 236, 232, 1);
+            color: #846651;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(132, 102, 81, 0.2);
+        }
+        
+        .btn-gradient {
+            background: var(--secondary);
+            border: none;
+            color: white;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 20px rgba(212, 165, 116, 0.4);
+        }
+        
+        .btn-gradient:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(212, 165, 116, 0.6);
+            color: white;
+        }
+        
+        /* Hero Section */
+        .hero-section {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero-content {
+            z-index: 2;
+            position: relative;
+        }
+        
+        .hero-title {
+            font-size: 4rem;
+            font-weight: 700;
+            color: #8b4513;
+            text-shadow: 0 5px 20px rgba(139, 69, 19, 0.3);
+            margin-bottom: 1.5rem;
+            animation: fadeInUp 1s ease;
+        }
+        
+        .hero-subtitle {
+            font-size: 1.3rem;
+            color: rgba(139, 69, 19, 0.8);
+            margin-bottom: 2rem;
+            animation: fadeInUp 1s ease 0.2s both;
+        }
+        
+        .hero-cta {
+            animation: fadeInUp 1s ease 0.4s both;
+        }
+        
+        /* Floating Elements */
+        .floating-element {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        .floating-1 {
+            top: 20%;
+            right: 10%;
+            width: 100px;
+            height: 100px;
+            animation-delay: 0s;
+        }
+        
+        .floating-2 {
+            top: 60%;
+            right: 20%;
+            width: 60px;
+            height: 60px;
+            animation-delay: 2s;
+        }
+        
+        .floating-3 {
+            top: 40%;
+            left: 10%;
+            width: 80px;
+            height: 80px;
+            animation-delay: 4s;
+        }
+        
+        /* Glass Cards */
+        .glass-card {
+            background: rgba(132, 102, 81, 0.8);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(132, 102, 81, 0.5);
+            border-radius: 20px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+            height: 100%;
+            box-shadow: 0 8px 25px rgba(132, 102, 81, 0.3), 0 0 30px rgba(255, 236, 232, 0.6);
+        }
+        
+        .glass-card:hover {
+            transform: translateY(-10px);
+            background: rgba(132, 102, 81, 0.9);
+            box-shadow: 0 20px 40px rgba(132, 102, 81, 0.4), 0 0 50px rgba(255, 236, 232, 0.8), 0 0 80px rgba(255, 236, 232, 0.4);
+            border-color: rgba(132, 102, 81, 0.7);
+        }
+        
+        .category-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            background: var(--accent);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        /* Product Cards */
+        .product-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            border: none;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        
+        .product-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.2);
+        }
+        
+        .product-img {
+            height: 280px;
+            object-fit: cover;
+            transition: all 0.3s ease;
+        }
+        
+        .product-card:hover .product-img {
+            transform: scale(1.1);
+        }
+        
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+        
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-100px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(100px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        .scroll-animate {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s ease;
+        }
+        
+        .scroll-animate.animate {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .scroll-left {
+            opacity: 0;
+            transform: translateX(-100px);
+            transition: all 0.8s ease;
+        }
+        
+        .scroll-left.animate {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        
+        .scroll-right {
+            opacity: 0;
+            transform: translateX(100px);
+            transition: all 0.8s ease;
+        }
+        
+        .scroll-right.animate {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        
+        /* Sections */
+        .section {
+            padding: 100px 0;
+            position: relative;
+        }
+        
+        .section-title {
+            font-size: 3rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 3rem;
+            color: #8b4513;
+            text-shadow: 0 3px 15px rgba(139, 69, 19, 0.3);
+        }
+        
+        /* Footer */
+        .footer {
+            background-color: #846651 !important;
+            color: white;
+            padding: 50px 0 30px;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.5rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1.1rem;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+        }
+        
+        /* Cart Badge */
+        .cart-badge {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: var(--secondary);
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            font-size: 0.7rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+        }
+        
+        .text-white {
+            color: #846651 !important;
+        }
+        
+        .glass-card .text-white,
+        .glass-card h5,
+        .glass-card p {
+            color: white !important;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-glass">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="/">
+                <img src="/2.png" alt="Logo" style="height: 45px; margin-right: 10px;">
+                Estilo Feminino
+            </a>
+            
+            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <i class="fas fa-bars text-white"></i>
+            </button>
+            
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/produtos">Produtos</a>
+                    </li>
+                </ul>
+                
+                <!-- Search -->
+                <form class="d-flex me-3" action="/produtos" method="get">
+                    <div class="input-group">
+                        <input class="form-control bg-transparent border-0 text-white" type="search" name="busca" 
+                               placeholder="Buscar produtos..." style="backdrop-filter: blur(10px);">
+                        <button class="btn btn-glass" type="submit">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                </form>
+                
+                <!-- Cart -->
+                <div class="position-relative me-3">
+                    <a href="/carrinho" class="btn btn-glass">
+                        <i class="fas fa-shopping-bag"></i>
+                        <span class="cart-badge">0</span>
+                    </a>
+                </div>
+                
+                <!-- User -->
+                <div th:if="${session.usuario == null}">
+                    <a href="/login" class="btn btn-gradient">
+                        <i class="fas fa-user me-2"></i>Login
+                    </a>
+                </div>
+                <div th:if="${session.usuario != null}" class="dropdown">
+                    <button class="btn btn-glass dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                        <i class="fas fa-user me-2"></i><span th:text="${session.usuario.nome}">Usuário</span>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="/pedidos">Meus Pedidos</a></li>
+                        <li th:if="${session.usuario.isAdmin()}"><hr class="dropdown-divider"></li>
+                        <li th:if="${session.usuario.isAdmin()}"><a class="dropdown-item" href="/admin/dashboard"><i class="fas fa-chart-line me-2"></i>Dashboard</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="/logout">Sair</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="floating-element floating-1"></div>
+        <div class="floating-element floating-2"></div>
+        <div class="floating-element floating-3"></div>
+        
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6 hero-content">
+                    <h1 class="hero-title" style="font-family: 'Dancing Script', cursive;">Estilo<br><span style="background: var(--secondary); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">Feminino</span></h1>
+                    <p class="hero-subtitle">Descubra as últimas tendências da moda feminina com qualidade premium e estilo único. Sua beleza merece o melhor.</p>
+                    <div class="hero-cta">
+                        <a href="/produtos" class="btn btn-gradient btn-lg me-3">
+                            <i class="fas fa-shopping-bag me-2"></i>Explorar Coleção
+                        </a>
+                        <a href="#categorias" class="btn btn-glass btn-lg">
+                            <i class="fas fa-arrow-down me-2"></i>Ver Categorias
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-6 text-center">
+                    <div class="position-relative">
+                        <i class="fas fa-female" style="font-size: 300px; color: rgba(255,255,255,0.1);"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Categories Section -->
+    <section id="categorias" class="section">
+        <div class="container">
+            <h2 class="section-title scroll-animate">Nossas Categorias</h2>
+            <div class="row g-4">
+                <div th:each="categoria : ${categorias}" class="col-md-6 col-lg-4 scroll-animate">
+                    <a th:href="@{/produtos(categoria=${categoria.idCategoria})}" class="text-decoration-none">
+                        <div class="glass-card text-center text-white">
+                            <div class="category-icon">
+                                <i th:class="${categoria.nome == 'Vestuário' ? 'fas fa-tshirt' : 
+                                             categoria.nome == 'Moda Fitness' ? 'fas fa-dumbbell' :
+                                             categoria.nome == 'Moda Íntima' ? 'fas fa-heart' :
+                                             categoria.nome == 'Calçados' ? 'fas fa-shoe-prints' :
+                                             categoria.nome == 'Acessórios' ? 'fas fa-gem' :
+                                             categoria.nome == 'Maquiagem' ? 'fas fa-palette' : 'fas fa-shopping-bag'}"></i>
+                            </div>
+                            <h5 class="mb-3" th:text="${categoria.nome}">Categoria</h5>
+                            <p class="mb-0 opacity-75" th:text="${categoria.descricao}">Descrição</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Products Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title scroll-animate">Produtos em Destaque</h2>
+            <div class="row g-4">
+                <div th:each="produto : ${produtos}" class="col-md-6 col-lg-3 scroll-animate">
+                    <div class="card product-card h-100">
+                        <div class="position-relative overflow-hidden">
+                            <img th:src="${produto.urlImagem != null ? produto.urlImagem : 'https://via.placeholder.com/300x280?text=Produto'}" 
+                                 class="card-img-top product-img" th:alt="${produto.nome}">
+                            <div class="position-absolute top-0 end-0 m-3">
+                                <span th:if="${produto.estoqueAtual <= 0}" class="badge bg-danger">Esgotado</span>
+                                <span th:if="${produto.estoqueAtual <= produto.estoqueMinimo and produto.estoqueAtual > 0}" 
+                                      class="badge bg-warning">Últimas unidades</span>
+                            </div>
+                        </div>
+                        <div class="card-body d-flex flex-column">
+                            <h6 class="card-title fw-bold" th:text="${produto.nome}">Produto</h6>
+                            <p class="card-text text-muted small flex-grow-1" th:text="${produto.descricao}">Descrição</p>
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <span class="h5 mb-0" style="background: var(--secondary); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: 700;" 
+                                      th:text="'R$ ' + ${#numbers.formatDecimal(produto.precoUnitario, 1, 2)}">R$ 0,00</span>
+                                <small class="text-muted" th:text="'Estoque: ' + ${produto.estoqueAtual}">Estoque: 0</small>
+                            </div>
+                            <form action="/carrinho/adicionar" method="post" class="d-grid">
+                                <input type="hidden" name="produtoId" th:value="${produto.idProduto}">
+                                <button type="submit" class="btn btn-gradient" th:disabled="${produto.estoqueAtual <= 0}">
+                                    <i class="fas fa-cart-plus me-2"></i>
+                                    <span th:text="${produto.estoqueAtual > 0 ? 'Adicionar' : 'Esgotado'}">Adicionar</span>
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="text-center mt-5">
+                <a href="/produtos" class="btn btn-gradient btn-lg">
+                    Ver Todos os Produtos <i class="fas fa-arrow-right ms-2"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="section">
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-md-3 scroll-animate">
+                    <div class="glass-card text-center text-white">
+                        <i class="fas fa-shipping-fast category-icon"></i>
+                        <h5 class="mb-3">Entrega Rápida</h5>
+                        <p class="mb-0 opacity-75">Receba em até 3 dias úteis</p>
+                    </div>
+                </div>
+                <div class="col-md-3 scroll-animate">
+                    <div class="glass-card text-center text-white">
+                        <i class="fas fa-shield-alt category-icon"></i>
+                        <h5 class="mb-3">Compra Segura</h5>
+                        <p class="mb-0 opacity-75">Dados protegidos</p>
+                    </div>
+                </div>
+                <div class="col-md-3 scroll-animate">
+                    <div class="glass-card text-center text-white">
+                        <i class="fas fa-undo category-icon"></i>
+                        <h5 class="mb-3">Troca Fácil</h5>
+                        <p class="mb-0 opacity-75">30 dias para trocas</p>
+                    </div>
+                </div>
+                <div class="col-md-3 scroll-animate">
+                    <div class="glass-card text-center text-white">
+                        <i class="fas fa-headset category-icon"></i>
+                        <h5 class="mb-3">Suporte 24h</h5>
+                        <p class="mb-0 opacity-75">Sempre disponível</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h5 class="mb-3"><i class="fas fa-gem me-2"></i>Estilo Feminino</h5>
+                    <p class="opacity-75">Sua loja de moda feminina premium com as melhores tendências e qualidade excepcional.</p>
+                </div>
+                <div class="col-md-3">
+                    <h6 class="mb-3">Links Úteis</h6>
+                    <ul class="list-unstyled">
+                        <li><a href="/" class="text-white-50 text-decoration-none">Home</a></li>
+                        <li><a href="/produtos" class="text-white-50 text-decoration-none">Produtos</a></li>
+                        <li><a href="/carrinho" class="text-white-50 text-decoration-none">Carrinho</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-3">
+                    <h6 class="mb-3">Contato</h6>
+                    <p class="text-white-50 mb-1"><i class="fas fa-envelope me-2"></i>contato@estilofeminino.com</p>
+                    <p class="text-white-50"><i class="fas fa-phone me-2"></i>(11) 99999-9999</p>
+                </div>
+            </div>
+            <hr class="my-4 opacity-25">
+            <div class="text-center">
+                <p class="mb-0 opacity-50">&copy; 2024 Estilo Feminino. Todos os direitos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+        
+        // Navbar scroll effect
+        window.addEventListener('scroll', function() {
+            const navbar = document.querySelector('.navbar-glass');
+            if (window.scrollY > 50) {
+                navbar.style.background = 'linear-gradient(135deg, rgba(255, 236, 232, 0.98) 0%, rgba(132, 102, 81, 0.1) 100%)';
+                navbar.style.borderBottom = '1px solid rgba(132, 102, 81, 0.3)';
+            } else {
+                navbar.style.background = 'rgba(255, 236, 232, 0.95)';
+                navbar.style.borderBottom = '1px solid rgba(132, 102, 81, 0.2)';
+            }
+        });
+        
+        // Scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry, index) => {
+                if (entry.isIntersecting) {
+                    setTimeout(() => {
+                        entry.target.classList.add('animate');
+                    }, index * 100);
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all scroll-animate elements
+        document.querySelectorAll('.scroll-animate, .scroll-left, .scroll-right').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>

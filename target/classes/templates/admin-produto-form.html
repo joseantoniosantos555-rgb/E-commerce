@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastrar Produto - Admin</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        .text-white, .text-white-50 { color: #846651 !important; }
+        .opacity-75 { color: rgba(132, 102, 81, 0.75) !important; }
+    </style>
+</head>
+<body style="background: linear-gradient(135deg, #ffffff 0%, #ffece8 50%, #ffffff 100%); min-height: 100vh; font-family: 'Open Sans', sans-serif;">
+    <div class="container mt-4">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 style="color: #846651; font-family: 'Dancing Script', cursive; font-size: 2rem;">
+                            <i th:class="${produto.idProduto != null ? 'fas fa-edit me-2' : 'fas fa-plus me-2'}"></i>
+                            <span th:text="${produto.idProduto != null ? 'Editar Produto' : 'Cadastrar Novo Produto'}">Cadastrar Novo Produto</span>
+                        </h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="alert alert-danger" th:if="${erro}" th:text="${erro}"></div>
+                        
+                        <form th:action="${produto.idProduto != null ? '/admin/produtos/atualizar/' + produto.idProduto : '/admin/produtos/salvar'}" method="post">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label class="form-label">Nome do Produto</label>
+                                        <input type="text" class="form-control" name="nome" th:value="${produto.nome}" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label class="form-label">Categoria</label>
+                                        <select class="form-select" name="categoriaId" required>
+                                            <option value="">Selecione uma categoria</option>
+                                            <option th:each="categoria : ${categorias}" 
+                                                    th:value="${categoria.idCategoria}" 
+                                                    th:text="${categoria.nome}"
+                                                    th:selected="${produto.categoria != null and produto.categoria.idCategoria == categoria.idCategoria}">Categoria</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label class="form-label">Descrição</label>
+                                <textarea class="form-control" name="descricao" rows="3" th:text="${produto.descricao}" required></textarea>
+                            </div>
+                            
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="mb-3">
+                                        <label class="form-label">Preço (R$)</label>
+                                        <input type="number" class="form-control" name="precoUnitario" step="0.01" min="0" th:value="${produto.precoUnitario}" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="mb-3">
+                                        <label class="form-label">Estoque Atual</label>
+                                        <input type="number" class="form-control" name="estoqueAtual" min="0" th:value="${produto.estoqueAtual}" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="mb-3">
+                                        <label class="form-label">Estoque Mínimo</label>
+                                        <input type="number" class="form-control" name="estoqueMinimo" min="0" th:value="${produto.estoqueMinimo}" required>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label class="form-label">Tamanhos (separados por vírgula)</label>
+                                        <input type="text" class="form-control" name="tamanhos" placeholder="P,M,G,GG" th:value="${produto.tamanhos}">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label class="form-label">Cores (separadas por vírgula)</label>
+                                        <input type="text" class="form-control" name="cores" placeholder="Preto,Branco,Azul" th:value="${produto.cores}">
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label class="form-label">URL da Imagem</label>
+                                <input type="url" class="form-control" name="urlImagem" placeholder="https://exemplo.com/imagem.jpg" th:value="${produto.urlImagem}">
+                            </div>
+                            
+                            <div class="d-flex justify-content-between">
+                                <div>
+                                    <a href="/" class="btn btn-secondary me-2">
+                                        <i class="fas fa-arrow-left me-2"></i>Voltar
+                                    </a>
+                                    <a href="/admin/dashboard" class="btn btn-outline-secondary me-2">
+                                        <i class="fas fa-tachometer-alt me-2"></i>Dashboard
+                                    </a>
+                                    <a href="/admin/produtos" class="btn btn-outline-primary">
+                                        <i class="fas fa-list me-2"></i>Lista de Produtos
+                                    </a>
+                                </div>
+                                <button type="submit" class="btn btn-success">
+                                    <i class="fas fa-save me-2"></i>
+                                    <span th:text="${produto.idProduto != null ? 'Atualizar Produto' : 'Salvar Produto'}">Salvar Produto</span>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

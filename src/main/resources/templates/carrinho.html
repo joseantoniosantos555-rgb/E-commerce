@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carrinho - Estilo Feminino</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary: linear-gradient(135deg, #ffece8 0%, #ffffff 100%);
+            --secondary: linear-gradient(135deg, #846651 0%, #6b5442 100%);
+            --accent: linear-gradient(135deg, #ffece8 0%, #ffffff 100%);
+            --success: linear-gradient(135deg, #846651 0%, #6b5442 100%);
+            --danger: linear-gradient(135deg, #846651 0%, #6b5442 100%);
+            --white: #ffffff;
+            --cream: #ffece8;
+            --brown: #846651;
+        }
+        
+        body {
+            font-family: 'Open Sans', sans-serif;
+            background: linear-gradient(135deg, #ffffff 0%, #ffece8 50%, #ffffff 100%);
+            min-height: 100vh;
+        }
+        
+        /* Navbar */
+        .navbar-glass {
+            background: rgba(255, 236, 232, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(132, 102, 81, 0.2);
+        }
+        
+        .navbar-brand {
+            font-family: 'Dancing Script', cursive;
+            font-weight: 600;
+            font-size: 2.2rem;
+            color: #846651 !important;
+            text-shadow: 0 2px 10px rgba(132, 102, 81, 0.3);
+        }
+        
+        @media (max-width: 768px) {
+            .navbar-brand {
+                font-size: 1.8rem;
+            }
+            .navbar-brand img {
+                height: 35px !important;
+            }
+        }
+        
+        .nav-link {
+            color: #846651 !important;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-link:hover {
+            color: #846651 !important;
+            opacity: 0.7;
+            transform: translateY(-2px);
+        }
+        
+        .btn-glass {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+        
+        .btn-glass:hover {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            transform: translateY(-2px);
+        }
+        
+        .btn-gradient {
+            background: var(--secondary);
+            border: none;
+            color: white;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-gradient:hover {
+            transform: translateY(-2px);
+            color: white;
+            box-shadow: 0 10px 30px rgba(240, 147, 251, 0.4);
+        }
+        
+        .btn-success-gradient {
+            background: var(--success);
+            border: none;
+            color: white;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-success-gradient:hover {
+            transform: translateY(-2px);
+            color: white;
+            box-shadow: 0 10px 30px rgba(17, 153, 142, 0.4);
+        }
+        
+        .btn-danger-gradient {
+            background: var(--danger);
+            border: none;
+            color: white;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-danger-gradient:hover {
+            transform: translateY(-2px);
+            color: white;
+            box-shadow: 0 10px 30px rgba(252, 70, 107, 0.4);
+        }
+        
+        /* Content */
+        .content-area {
+            margin-top: 80px;
+            padding: 2rem 0;
+        }
+        
+        /* Glass Cards */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            transition: all 0.3s ease;
+        }
+        
+        .glass-card:hover {
+            background: rgba(255, 255, 255, 0.15);
+        }
+        
+        /* Cart Items */
+        .cart-item {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            transition: all 0.3s ease;
+            border: none;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+        
+        .cart-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+        }
+        
+        .cart-item-img {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+        
+        .item-title {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+        
+        .item-price {
+            font-size: 1.1rem;
+            font-weight: 700;
+            background: var(--secondary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .item-total {
+            font-size: 1.2rem;
+            font-weight: 700;
+            background: var(--primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        /* Quantity Controls */
+        .quantity-control {
+            display: flex;
+            align-items: center;
+            background: #f8f9fa;
+            border-radius: 25px;
+            overflow: hidden;
+        }
+        
+        .quantity-btn {
+            background: none;
+            border: none;
+            width: 35px;
+            height: 35px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #667eea;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .quantity-btn:hover {
+            background: #667eea;
+            color: white;
+        }
+        
+        .quantity-input {
+            border: none;
+            background: none;
+            text-align: center;
+            width: 50px;
+            font-weight: 600;
+        }
+        
+        .quantity-input:focus {
+            outline: none;
+        }
+        
+        /* Summary Card */
+        .summary-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 100px;
+        }
+        
+        .summary-title {
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+        
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+        }
+        
+        .summary-row span {
+            color: #846651 !important;
+        }
+        
+        .summary-total {
+            border-top: 2px solid #eee;
+            padding-top: 1rem;
+            font-size: 1.3rem;
+            font-weight: 700;
+        }
+        
+        .total-amount {
+            color: #846651 !important;
+            background: none !important;
+        }
+        
+        /* Empty Cart */
+        .empty-cart {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: white;
+        }
+        
+        .empty-icon {
+            font-size: 5rem;
+            opacity: 0.5;
+            margin-bottom: 1.5rem;
+        }
+        
+        /* Payment Icons */
+        .payment-icons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .payment-icon {
+            font-size: 2rem;
+            opacity: 0.7;
+            transition: all 0.3s ease;
+        }
+        
+        .payment-icon:hover {
+            opacity: 1;
+            transform: scale(1.1);
+        }
+        
+        /* Security Badge */
+        .security-badge {
+            background: rgba(17, 153, 142, 0.1);
+            border: 1px solid rgba(17, 153, 142, 0.3);
+            border-radius: 15px;
+            padding: 1rem;
+            text-align: center;
+            margin-top: 1rem;
+        }
+        
+        .security-icon {
+            font-size: 2rem;
+            color: #11998e;
+            margin-bottom: 0.5rem;
+        }
+        
+        /* Breadcrumb */
+        .breadcrumb {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 1rem;
+        }
+        
+        .breadcrumb-item a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+        }
+        
+        .breadcrumb-item.active {
+            color: white;
+        }
+        
+        /* Cart Badge */
+        .cart-badge {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: var(--secondary);
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            font-size: 0.7rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+        }
+        
+        .text-white {
+            color: #846651 !important;
+        }
+        
+        /* Animations */
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .slide-in-up {
+            animation: slideInUp 0.6s ease forwards;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .content-area {
+                margin-top: 70px;
+            }
+            
+            .summary-card {
+                position: static;
+                margin-top: 2rem;
+            }
+            
+            .cart-item {
+                padding: 1rem;
+            }
+            
+            .cart-item-img {
+                width: 60px;
+                height: 60px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-glass fixed-top">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="/">
+                <img src="/1.png" alt="Logo" style="height: 45px; margin-right: 10px;">
+                Estilo Feminino
+            </a>
+            
+            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <i class="fas fa-bars text-white"></i>
+            </button>
+            
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/produtos">Produtos</a>
+                    </li>
+                </ul>
+                
+                <!-- Search -->
+                <form class="d-flex me-3" action="/produtos" method="get">
+                    <div class="input-group">
+                        <input class="form-control bg-transparent border-0 text-white" type="search" name="busca" 
+                               placeholder="Buscar produtos..." style="backdrop-filter: blur(10px);">
+                        <button class="btn btn-glass" type="submit">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                </form>
+                
+                <!-- Cart -->
+                <div class="position-relative me-3">
+                    <a href="/carrinho" class="btn btn-gradient">
+                        <i class="fas fa-shopping-bag"></i>
+                        <span class="cart-badge" th:text="${#lists.size(itens)}">0</span>
+                    </a>
+                </div>
+                
+                <!-- User -->
+                <div th:if="${session.usuario == null}">
+                    <a href="/login" class="btn btn-glass">
+                        <i class="fas fa-user me-2"></i>Login
+                    </a>
+                </div>
+                <div th:if="${session.usuario != null}" class="dropdown">
+                    <button class="btn btn-glass dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                        <i class="fas fa-user me-2"></i><span th:text="${session.usuario.nome}">Usuário</span>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="/pedidos">Meus Pedidos</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="/logout">Sair</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Content -->
+    <div class="content-area">
+        <div class="container">
+            <!-- Breadcrumb -->
+            <nav aria-label="breadcrumb" class="mb-4">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/">Home</a></li>
+                    <li class="breadcrumb-item active">Carrinho</li>
+                </ol>
+            </nav>
+
+            <!-- Page Title -->
+            <div class="glass-card p-4 mb-4">
+                <h2 class="text-white mb-0">
+                    <i class="fas fa-shopping-bag me-3"></i>Meu Carrinho
+                </h2>
+            </div>
+
+            <!-- Empty Cart -->
+            <div th:if="${#lists.isEmpty(itens)}" class="empty-cart">
+                <i class="fas fa-shopping-bag empty-icon"></i>
+                <h4 class="mb-3">Seu carrinho está vazio</h4>
+                <p class="opacity-75 mb-4">Adicione produtos incríveis ao seu carrinho e comece a comprar!</p>
+                <a href="/produtos" class="btn btn-gradient btn-lg">
+                    <i class="fas fa-shopping-bag me-2"></i>Explorar Produtos
+                </a>
+            </div>
+
+            <!-- Cart with Items -->
+            <div th:if="${!#lists.isEmpty(itens)}" class="row">
+                <div class="col-lg-8">
+                    <!-- Cart Items -->
+                    <div class="mb-4">
+                        <div th:each="item, iterStat : ${itens}" class="cart-item slide-in-up" 
+                             th:style="'animation-delay: ' + ${iterStat.index * 0.1} + 's'">
+                            <div class="row align-items-center">
+                                <div class="col-md-2 col-3">
+                                    <img th:src="${item.produto.urlImagem != null ? item.produto.urlImagem : 'https://via.placeholder.com/80x80?text=Produto'}" 
+                                         class="cart-item-img" th:alt="${item.produto.nome}">
+                                </div>
+                                <div class="col-md-4 col-9">
+                                    <h6 class="item-title" th:text="${item.produto.nome}">Nome do Produto</h6>
+                                    <p class="text-muted small mb-1" th:text="${item.produto.descricao}">Descrição</p>
+                                    <div th:if="${item.tamanho != null}" class="small text-muted">
+                                        <i class="fas fa-ruler me-1"></i><strong>Tamanho:</strong> <span th:text="${item.tamanho}">M</span>
+                                    </div>
+                                    <div th:if="${item.cor != null}" class="small text-muted">
+                                        <i class="fas fa-palette me-1"></i><strong>Cor:</strong> <span th:text="${item.cor}">Azul</span>
+                                    </div>
+                                </div>
+                                <div class="col-md-2 col-6 text-center">
+                                    <div class="item-price" th:text="'R$ ' + ${#numbers.formatDecimal(item.produto.precoUnitario, 1, 2)}">
+                                        R$ 0,00
+                                    </div>
+                                </div>
+                                <div class="col-md-2 col-6">
+                                    <form action="/carrinho/atualizar" method="post">
+                                        <input type="hidden" name="produtoId" th:value="${item.produto.idProduto}">
+                                        <div class="quantity-control">
+                                            <button type="button" class="quantity-btn" onclick="decrementQuantity(this)">
+                                                <i class="fas fa-minus"></i>
+                                            </button>
+                                            <input type="number" name="quantidade" class="quantity-input" 
+                                                   th:value="${item.quantidade}" min="1" th:max="${item.produto.estoqueAtual}"
+                                                   onchange="this.form.submit()">
+                                            <button type="button" class="quantity-btn" onclick="incrementQuantity(this)">
+                                                <i class="fas fa-plus"></i>
+                                            </button>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="col-md-1 col-6 text-center">
+                                    <div class="item-total" th:text="'R$ ' + ${#numbers.formatDecimal(item.subtotal, 1, 2)}">
+                                        R$ 0,00
+                                    </div>
+                                </div>
+                                <div class="col-md-1 col-6 text-center">
+                                    <form action="/carrinho/remover" method="post" style="display: inline;">
+                                        <input type="hidden" name="produtoId" th:value="${item.produto.idProduto}">
+                                        <button type="submit" class="btn btn-danger-gradient btn-sm" 
+                                                onclick="return confirm('Deseja remover este item?')">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Cart Actions -->
+                    <div class="d-flex justify-content-between">
+                        <a href="/produtos" class="btn btn-glass btn-lg">
+                            <i class="fas fa-arrow-left me-2"></i>Continuar Comprando
+                        </a>
+                        <form action="/carrinho/limpar" method="post" style="display: inline;">
+                            <button type="submit" class="btn btn-danger-gradient btn-lg" 
+                                    onclick="return confirm('Deseja limpar todo o carrinho?')">
+                                <i class="fas fa-trash me-2"></i>Limpar Carrinho
+                            </button>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Order Summary -->
+                <div class="col-lg-4">
+                    <div class="summary-card">
+                        <h5 class="summary-title">
+                            <i class="fas fa-receipt me-2"></i>Resumo do Pedido
+                        </h5>
+                        
+                        <div class="summary-row">
+                            <span>Subtotal:</span>
+                            <span th:text="'R$ ' + ${#numbers.formatDecimal(total, 1, 2)}">R$ 0,00</span>
+                        </div>
+                        
+                        <div class="summary-row">
+                            <span>Frete:</span>
+                            <span class="text-success fw-bold">Grátis</span>
+                        </div>
+                        
+                        <div class="summary-row">
+                            <span>Desconto:</span>
+                            <span class="text-success">R$ 0,00</span>
+                        </div>
+                        
+                        <div class="summary-row summary-total">
+                            <span><strong>Total:</strong></span>
+                            <span class="total-amount" th:text="'R$ ' + ${#numbers.formatDecimal(total, 1, 2)}">R$ 0,00</span>
+                        </div>
+
+                        <!-- Checkout Button -->
+                        <div class="d-grid mt-4">
+                            <a href="/checkout" class="btn btn-success-gradient btn-lg">
+                                <i class="fas fa-credit-card me-2"></i>Finalizar Pedido
+                            </a>
+                        </div>
+
+                        <!-- Payment Methods -->
+                        <div class="text-center mt-3">
+                            <small class="text-muted">Formas de pagamento:</small>
+                            <div class="payment-icons">
+                                <i class="fab fa-cc-visa payment-icon text-primary"></i>
+                                <i class="fab fa-cc-mastercard payment-icon text-warning"></i>
+                                <i class="fas fa-qrcode payment-icon text-success"></i>
+                                <i class="fas fa-barcode payment-icon text-info"></i>
+                            </div>
+                        </div>
+
+                        <!-- Security -->
+                        <div class="security-badge">
+                            <i class="fas fa-shield-alt security-icon"></i>
+                            <h6 class="mb-1">Compra 100% Segura</h6>
+                            <small class="text-muted">Seus dados protegidos com SSL</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        function incrementQuantity(button) {
+            const input = button.previousElementSibling;
+            const max = parseInt(input.getAttribute('max'));
+            const current = parseInt(input.value);
+            if (current < max) {
+                input.value = current + 1;
+                input.form.submit();
+            }
+        }
+
+        function decrementQuantity(button) {
+            const input = button.nextElementSibling;
+            const current = parseInt(input.value);
+            if (current > 1) {
+                input.value = current - 1;
+                input.form.submit();
+            }
+        }
+
+        // Animate button on submit
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.querySelector('form[action="/checkout/finalizar"]');
+            if (form) {
+                form.addEventListener('submit', function() {
+                    const button = this.querySelector('button');
+                    button.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Processando...';
+                    button.disabled = true;
+                });
+            }
+        });
+
+        // Animate items on load
+        document.addEventListener('DOMContentLoaded', function() {
+            const items = document.querySelectorAll('.slide-in-up');
+            items.forEach((item, index) => {
+                setTimeout(() => {
+                    item.style.opacity = '1';
+                    item.style.transform = 'translateY(0)';
+                }, index * 100);
+            });
+        });
+    </script>
+</body>
+</html>

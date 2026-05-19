@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Produtos - Estilo Feminino</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary: linear-gradient(135deg, #ffece8 0%, #ffffff 100%);
+            --secondary: linear-gradient(135deg, #846651 0%, #6b5442 100%);
+            --accent: linear-gradient(135deg, #ffece8 0%, #ffffff 100%);
+            --white: #ffffff;
+            --cream: #ffece8;
+            --brown: #846651;
+            --light: #ffffff;
+        }
+        
+        body {
+            font-family: 'Open Sans', sans-serif;
+            background: linear-gradient(135deg, #ffffff 0%, #ffece8 50%, #ffffff 100%);
+            min-height: 100vh;
+        }
+        
+        /* Navbar */
+        .navbar-glass {
+            background: rgba(255, 236, 232, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(132, 102, 81, 0.2);
+            padding: 0.75rem 0;
+        }
+        
+        @media (max-width: 991px) {
+            .navbar-glass {
+                padding: 0.5rem 0;
+            }
+            .navbar-collapse {
+                background: rgba(255, 236, 232, 0.98);
+                margin-top: 1rem;
+                padding: 1rem;
+                border-radius: 10px;
+                border: 1px solid rgba(132, 102, 81, 0.2);
+            }
+        }
+        
+        .navbar-brand {
+            font-family: 'Dancing Script', cursive;
+            font-weight: 600;
+            font-size: 2.2rem;
+            color: #846651 !important;
+            text-shadow: 0 2px 10px rgba(132, 102, 81, 0.3);
+        }
+        
+        @media (max-width: 768px) {
+            .navbar-brand {
+                font-size: 1.8rem;
+            }
+            .navbar-brand img {
+                height: 35px !important;
+            }
+        }
+        
+        .nav-link {
+            color: #846651 !important;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-link:hover {
+            color: #846651 !important;
+            opacity: 0.7;
+            transform: translateY(-2px);
+        }
+        
+        .btn-glass {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+        
+        .btn-glass:hover {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            transform: translateY(-2px);
+        }
+        
+        .btn-gradient {
+            background: var(--secondary);
+            border: none;
+            color: white;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-gradient:hover {
+            transform: translateY(-2px);
+            color: white;
+            box-shadow: 0 10px 30px rgba(240, 147, 251, 0.4);
+        }
+        
+        /* Content Area */
+        .content-area {
+            margin-top: 80px;
+            padding: 2rem 0;
+        }
+        
+        /* Glass Cards */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            transition: all 0.3s ease;
+        }
+        
+        .glass-card:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-5px);
+        }
+        
+        /* Sidebar */
+        .sidebar {
+            position: sticky;
+            top: 100px;
+        }
+        
+        .filter-title {
+            color: #846651;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+        
+        .category-link {
+            color: rgba(132, 102, 81, 0.8);
+            text-decoration: none;
+            padding: 0.75rem 1rem;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+        
+        .category-link:hover,
+        .category-link.active {
+            background: rgba(132, 102, 81, 0.1);
+            color: #846651;
+            transform: translateX(10px);
+        }
+        
+        /* Product Grid */
+        .product-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            overflow: hidden;
+            transition: all 0.4s ease;
+            border: none;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            height: 100%;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-15px) scale(1.02);
+            box-shadow: 0 25px 60px rgba(0,0,0,0.2);
+        }
+        
+        .product-img-container {
+            position: relative;
+            overflow: hidden;
+            height: 280px;
+        }
+        
+        .product-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: all 0.4s ease;
+        }
+        
+        .product-card:hover .product-img {
+            transform: scale(1.1);
+        }
+        
+        .product-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            z-index: 2;
+        }
+        
+        .product-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, rgba(102, 126, 234, 0.8), rgba(118, 75, 162, 0.8));
+            opacity: 0;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .product-card:hover .product-overlay {
+            opacity: 1;
+        }
+        
+        .quick-view-btn {
+            background: white;
+            color: #667eea;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-weight: 600;
+            transform: translateY(20px);
+            transition: all 0.3s ease;
+        }
+        
+        .product-card:hover .quick-view-btn {
+            transform: translateY(0);
+        }
+        
+        /* Product Info */
+        .product-title {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+        
+        .product-price {
+            font-size: 1.25rem;
+            font-weight: 700;
+            background: var(--secondary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        /* Tags */
+        .size-tag,
+        .color-tag {
+            display: inline-block;
+            padding: 0.25rem 0.5rem;
+            margin: 0.125rem;
+            border-radius: 15px;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+        
+        .size-tag {
+            background: rgba(102, 126, 234, 0.1);
+            color: #667eea;
+            border: 1px solid rgba(102, 126, 234, 0.3);
+        }
+        
+        .color-tag {
+            background: rgba(240, 147, 251, 0.1);
+            color: #f093fb;
+            border: 1px solid rgba(240, 147, 251, 0.3);
+        }
+        
+        /* Form Controls */
+        .form-select,
+        .form-control {
+            border-radius: 10px;
+            border: 1px solid rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .form-select:focus,
+        .form-control:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+        }
+        
+        /* Search */
+        .search-container {
+            position: relative;
+        }
+        
+        .search-input {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            backdrop-filter: blur(10px);
+            border-radius: 25px;
+            padding-left: 3rem;
+        }
+        
+        .search-input::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        .search-icon {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        /* Breadcrumb */
+        .breadcrumb {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 1rem;
+        }
+        
+        .breadcrumb-item a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+        }
+        
+        .breadcrumb-item.active {
+            color: white;
+        }
+        
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: white;
+        }
+        
+        .empty-icon {
+            font-size: 4rem;
+            opacity: 0.5;
+            margin-bottom: 1rem;
+        }
+        
+        /* Cart Badge */
+        .cart-badge {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: var(--secondary);
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            font-size: 0.7rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+        }
+        
+        .text-white {
+            color: #846651 !important;
+        }
+        
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .fade-in-up {
+            animation: fadeInUp 0.6s ease forwards;
+        }
+        
+        /* Responsive */
+        @media (max-width: 991px) {
+            .content-area {
+                margin-top: 90px;
+            }
+            .sidebar {
+                position: static;
+                margin-bottom: 2rem;
+            }
+            .navbar-nav {
+                text-align: center;
+            }
+            .d-flex.me-3 {
+                justify-content: center;
+                margin: 1rem 0;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .content-area {
+                margin-top: 100px;
+                padding: 1rem 0;
+            }
+            .glass-card {
+                margin-bottom: 1rem;
+            }
+            .product-card {
+                margin-bottom: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-glass fixed-top">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="/">
+                <img src="/2.png" alt="Logo" style="height: 45px; margin-right: 10px;">
+                Estilo Feminino
+            </a>
+            
+            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <i class="fas fa-bars" style="color: #846651;"></i>
+            </button>
+            
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/produtos">Produtos</a>
+                    </li>
+                </ul>
+                
+                <div class="d-flex align-items-center ms-auto">
+                    <!-- Search -->
+                    <form class="d-flex me-3" action="/produtos" method="get">
+                        <input class="form-control me-2" type="search" name="busca" placeholder="Buscar produtos..." th:value="${busca}" style="color: #846651;">
+                        <button class="btn btn-outline-primary" type="submit" style="color: #846651; border-color: #846651;">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </form>
+                    
+                    <!-- Cart -->
+                    <div class="position-relative me-3">
+                        <a href="/carrinho" class="btn btn-outline-primary" style="color: #846651; border-color: #846651;">
+                            <i class="fas fa-shopping-cart"></i>
+                            <span class="cart-badge">0</span>
+                        </a>
+                    </div>
+                    
+                    <!-- User -->
+                    <div th:if="${session.usuario == null}">
+                        <a href="/login" class="btn btn-primary" style="background-color: #846651; border-color: #846651;">
+                            <i class="fas fa-user me-2"></i>Login
+                        </a>
+                    </div>
+                    <div th:if="${session.usuario != null}" class="dropdown">
+                        <button class="btn btn-outline-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" style="color: #846651; border-color: #846651;">
+                            <i class="fas fa-user me-2"></i><span th:text="${session.usuario.nome}">Usuário</span>
+                        </button>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="/pedidos" style="color: #846651;">Meus Pedidos</a></li>
+                        <li th:if="${session.usuario.isAdmin()}"><hr class="dropdown-divider"></li>
+                        <li th:if="${session.usuario.isAdmin()}"><a class="dropdown-item" href="/admin/pedidos" style="color: #846651;">Gerenciar Pedidos</a></li>
+                        <li th:if="${session.usuario.isAdmin()}"><a class="dropdown-item" href="/admin/produtos" style="color: #846651;">Gerenciar Produtos</a></li>
+                        <li th:if="${session.usuario.isAdmin()}"><a class="dropdown-item" href="/admin/categorias" style="color: #846651;">Gerenciar Categorias</a></li>
+                        <li th:if="${session.usuario.isAdmin()}"><a class="dropdown-item" href="/admin/produtos/novo" style="color: #846651;">Cadastrar Produtos</a></li>
+                        <li th:if="${session.usuario.isAdmin()}"><a class="dropdown-item" href="/admin/categorias/novo" style="color: #846651;">Cadastrar Categorias</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="/logout" style="color: #846651;">Sair</a></li>
+                    </ul>
+                </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Content -->
+    <div class="content-area">
+        <div class="container">
+            <!-- Breadcrumb -->
+            <nav aria-label="breadcrumb" class="mb-4">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/">Home</a></li>
+                    <li class="breadcrumb-item active">Produtos</li>
+                </ol>
+            </nav>
+
+            <div class="row">
+                <!-- Sidebar -->
+                <div class="col-lg-3 mb-4">
+                    <div class="sidebar">
+                        <div class="glass-card p-4">
+                            <h5 class="filter-title">
+                                <i class="fas fa-filter me-2"></i>Filtros
+                            </h5>
+                            
+                            <!-- Search Form -->
+                            <form action="/produtos" method="get" class="mb-4">
+                                <div class="mb-3">
+                                    <input type="text" class="form-control" name="busca" th:value="${busca}" 
+                                           placeholder="Digite o nome do produto...">
+                                </div>
+                                <button type="submit" class="btn btn-gradient w-100">
+                                    <i class="fas fa-search me-2"></i>Buscar
+                                </button>
+                            </form>
+
+                            <!-- Categories -->
+                            <h6 class="filter-title">Categorias</h6>
+                            <div class="mb-3">
+                                <a href="/produtos" class="category-link" 
+                                   th:classappend="${categoriaSelecionada == null ? 'active' : ''}">
+                                    <i class="fas fa-th-large me-2"></i>Todas as Categorias
+                                </a>
+                                <a th:each="categoria : ${categorias}" 
+                                   th:href="@{/produtos(categoria=${categoria.idCategoria})}"
+                                   class="category-link"
+                                   th:classappend="${categoriaSelecionada == categoria.idCategoria ? 'active' : ''}">
+                                    <i th:class="${categoria.nome == 'Vestuário' ? 'fas fa-tshirt' : 
+                                                 categoria.nome == 'Moda Fitness' ? 'fas fa-dumbbell' :
+                                                 categoria.nome == 'Moda Íntima' ? 'fas fa-heart' :
+                                                 categoria.nome == 'Calçados' ? 'fas fa-shoe-prints' :
+                                                 categoria.nome == 'Acessórios' ? 'fas fa-gem' :
+                                                 categoria.nome == 'Maquiagem' ? 'fas fa-palette' : 'fas fa-shopping-bag'}" 
+                                       class="me-2"></i>
+                                    <span th:text="${categoria.nome}">Categoria</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Products Grid -->
+                <div class="col-lg-9">
+                    <!-- Header -->
+                    <div class="glass-card p-4 mb-4">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <h2 class="mb-1" style="color: #2c2c2c; font-weight: 700;" th:if="${categoriaSelecionada == null and (busca == null or busca.isEmpty())}">
+                                    Todos os Produtos
+                                </h2>
+                                <h2 class="mb-1" style="color: #2c2c2c; font-weight: 700;" th:if="${categoriaSelecionada != null}">
+                                    <span th:text="${categorias.?[idCategoria == __${categoriaSelecionada}__][0]?.nome}">Categoria</span>
+                                </h2>
+                                <h2 class="mb-1" style="color: #2c2c2c; font-weight: 700;" th:if="${busca != null and !busca.isEmpty()}">
+                                    Resultados para: "<span th:text="${busca}">busca</span>"
+                                </h2>
+                                <p class="mb-0" style="color: #2c2c2c; font-weight: 600; font-size: 1.1rem;" th:text="${#lists.size(produtos)} + ' produto(s) encontrado(s)'">
+                                    0 produtos encontrados
+                                </p>
+                            </div>
+                            <div th:if="${isAdmin}">
+                                <a href="/admin/produtos/novo" class="btn btn-gradient me-2">
+                                    <i class="fas fa-plus me-2"></i>Cadastrar Produto
+                                </a>
+                                <a href="/admin/categorias/novo" class="btn btn-outline-secondary">
+                                    <i class="fas fa-tags me-2"></i>Cadastrar Categoria
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Empty State -->
+                    <div th:if="${#lists.isEmpty(produtos)}" class="empty-state">
+                        <i class="fas fa-search empty-icon"></i>
+                        <h4>Nenhum produto encontrado</h4>
+                        <p class="opacity-75">Tente ajustar os filtros ou fazer uma nova busca.</p>
+                        <a href="/produtos" class="btn btn-gradient btn-lg">
+                            Ver Todos os Produtos
+                        </a>
+                    </div>
+
+                    <!-- Products Grid -->
+                    <div th:if="${!#lists.isEmpty(produtos)}" class="row g-4">
+                        <div th:each="produto, iterStat : ${produtos}" class="col-md-6 col-xl-4 fade-in-up" 
+                             th:style="'animation-delay: ' + ${iterStat.index * 0.1} + 's'">
+                            <div class="card product-card">
+                                <div class="product-img-container">
+                                    <img th:src="${produto.urlImagem != null ? produto.urlImagem : 'https://via.placeholder.com/300x280?text=Produto'}" 
+                                         class="product-img" th:alt="${produto.nome}">
+                                    
+                                    <div class="product-badge">
+                                        <span th:if="${produto.estoqueAtual <= 0}" class="badge bg-danger">Esgotado</span>
+                                        <span th:if="${produto.estoqueAtual <= produto.estoqueMinimo and produto.estoqueAtual > 0}" 
+                                              class="badge bg-warning">Últimas unidades</span>
+                                    </div>
+                                    
+                                    <div class="product-overlay">
+                                        <button class="quick-view-btn">
+                                            <i class="fas fa-eye me-2"></i>Visualizar
+                                        </button>
+                                    </div>
+                                </div>
+                                
+                                <div class="card-body p-4">
+                                    <h6 class="product-title" th:text="${produto.nome}">Nome do Produto</h6>
+                                    <p class="text-muted small mb-3" th:text="${produto.descricao}">Descrição</p>
+                                    
+                                    <!-- Tags -->
+                                    <div th:if="${produto.tamanhos != null and !produto.tamanhos.isEmpty()}" class="mb-2">
+                                        <span th:each="tamanho : ${produto.tamanhos.split(',')}" 
+                                              class="size-tag" th:text="${tamanho.trim()}">P</span>
+                                    </div>
+                                    
+                                    <div th:if="${produto.cores != null and !produto.cores.isEmpty()}" class="mb-3">
+                                        <span th:each="cor : ${produto.cores.split(',')}" 
+                                              class="color-tag" th:text="${cor.trim()}">Azul</span>
+                                    </div>
+
+                                    <div class="d-flex justify-content-between align-items-center mb-3">
+                                        <span class="product-price" th:text="'R$ ' + ${#numbers.formatDecimal(produto.precoUnitario, 1, 2)}">
+                                            R$ 0,00
+                                        </span>
+                                        <small class="text-muted" th:text="'Estoque: ' + ${produto.estoqueAtual}">
+                                            Estoque: 0
+                                        </small>
+                                    </div>
+                                    
+                                    <form action="/carrinho/adicionar" method="post">
+                                        <input type="hidden" name="produtoId" th:value="${produto.idProduto}">
+                                        
+                                        <!-- Size Selection -->
+                                        <div th:if="${produto.tamanhos != null and !produto.tamanhos.isEmpty()}" class="mb-2">
+                                            <select name="tamanho" class="form-select form-select-sm" required>
+                                                <option value="">Tamanho</option>
+                                                <option th:each="tamanho : ${produto.tamanhos.split(',')}" 
+                                                        th:value="${tamanho.trim()}" 
+                                                        th:text="${tamanho.trim()}">P</option>
+                                            </select>
+                                        </div>
+                                        
+                                        <!-- Color Selection -->
+                                        <div th:if="${produto.cores != null and !produto.cores.isEmpty()}" class="mb-2">
+                                            <select name="cor" class="form-select form-select-sm" required>
+                                                <option value="">Cor</option>
+                                                <option th:each="cor : ${produto.cores.split(',')}" 
+                                                        th:value="${cor.trim()}" 
+                                                        th:text="${cor.trim()}">Azul</option>
+                                            </select>
+                                        </div>
+                                        
+                                        <!-- Quantity -->
+                                        <div class="input-group input-group-sm mb-3">
+                                            <span class="input-group-text">Qtd:</span>
+                                            <input type="number" name="quantidade" class="form-control" 
+                                                   value="1" min="1" th:max="${produto.estoqueAtual}" required>
+                                        </div>
+                                        
+                                        <button type="submit" class="btn btn-gradient w-100" 
+                                                th:disabled="${produto.estoqueAtual <= 0}">
+                                            <i class="fas fa-cart-plus me-2"></i>
+                                            <span th:text="${produto.estoqueAtual > 0 ? 'Adicionar ao Carrinho' : 'Produto Esgotado'}">
+                                                Adicionar ao Carrinho
+                                            </span>
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="py-5 mt-5" style="background-color: #846651; color: white;">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <h5 class="mb-3">
+                        <img src="/2.png" alt="Logo" style="height: 30px; margin-right: 10px;">
+                        Estilo Feminino
+                    </h5>
+                    <p class="opacity-75">Sua loja de moda feminina online com as melhores tendências e preços especiais.</p>
+                    <div class="d-flex gap-3">
+                        <a href="#" class="text-white opacity-75"><i class="fab fa-instagram fa-lg"></i></a>
+                        <a href="#" class="text-white opacity-75"><i class="fab fa-facebook fa-lg"></i></a>
+                        <a href="#" class="text-white opacity-75"><i class="fab fa-whatsapp fa-lg"></i></a>
+                    </div>
+                </div>
+                <div class="col-md-2 mb-4">
+                    <h6 class="mb-3">Navegação</h6>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="/" class="text-white opacity-75 text-decoration-none">Home</a></li>
+                        <li class="mb-2"><a href="/produtos" class="text-white opacity-75 text-decoration-none">Produtos</a></li>
+                        <li class="mb-2"><a href="/carrinho" class="text-white opacity-75 text-decoration-none">Carrinho</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-3 mb-4">
+                    <h6 class="mb-3">Categorias</h6>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="/produtos?categoria=1" class="text-white opacity-75 text-decoration-none">Vestuário</a></li>
+                        <li class="mb-2"><a href="/produtos?categoria=2" class="text-white opacity-75 text-decoration-none">Calçados</a></li>
+                        <li class="mb-2"><a href="/produtos?categoria=3" class="text-white opacity-75 text-decoration-none">Acessórios</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-3 mb-4">
+                    <h6 class="mb-3">Contato</h6>
+                    <p class="mb-2 opacity-75"><i class="fas fa-envelope me-2"></i>contato@estilofeminino.com</p>
+                    <p class="mb-2 opacity-75"><i class="fas fa-phone me-2"></i>(11) 99999-9999</p>
+                    <p class="mb-0 opacity-75"><i class="fas fa-map-marker-alt me-2"></i>São Paulo, SP</p>
+                </div>
+            </div>
+            <hr class="my-4" style="border-color: rgba(255,255,255,0.2);">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <p class="mb-0 opacity-75">&copy; 2024 Estilo Feminino. Todos os direitos reservados.</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <small class="opacity-75">Desenvolvido com <i class="fas fa-heart text-danger"></i> para você</small>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // Animate cards on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in-up').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = 'all 0.6s ease';
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>

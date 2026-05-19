@@ -6,6 +6,13 @@
             "name": "ECommerceApp",
             "request": "launch",
             "mainClass": "com.ecommerce.ECommerceApp",
+            "projectName": "Projeto-e-commerce_aea47125"
+        },
+        {
+            "type": "java",
+            "name": "ECommerceApp",
+            "request": "launch",
+            "mainClass": "com.ecommerce.ECommerceApp",
             "projectName": "ecommerce-java_b3f5de47"
         },
         {
