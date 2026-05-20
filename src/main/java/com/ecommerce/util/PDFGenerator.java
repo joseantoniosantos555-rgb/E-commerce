@@ -136,7 +136,6 @@ public class PDFGenerator {
             stream.append("BT /F2 7 Tf 455 ").append(yPos + 3).append(" Td (").append(item.getSubtotal()).append(") Tj ET\n");
             
             yPos -= 15;
-
         }
         
         stream.append("50 ").append(yPos).append(" m 545 ").append(yPos).append(" l S\n");
